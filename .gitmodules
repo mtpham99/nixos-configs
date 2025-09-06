@@ -1,0 +1,6 @@
+[submodule "external/secrets"]
+	path = external/secrets
+	url = https://github.com/mtpham99/secrets.git
+[submodule "external/assets"]
+	path = external/assets
+	url = https://github.com/mtpham99/assets.git
