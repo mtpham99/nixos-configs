@@ -57,16 +57,18 @@
     facter.reportPath = ./facter.json;
 
     # udev symlinks for consistent /dev/dri/${CARD} paths
-    services.udev.extraRules = let
-      nvidiaGpuId = "0000:01:00.0";
-      nvidiaGpuName = "nvidia-gtx-1650-maxq";
-      intelGpuId = "0000:00:02.0";
-      intelGpuName = "intel-uhd-graphics-630";
-    in ''
-      # Create /dev/dri/''${CARD} symlink
-      KERNEL=="card*", KERNELS=="${nvidiaGpuId}", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/${nvidiaGpuName}"
-      KERNEL=="card*", KERNELS=="${intelGpuId}", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/${intelGpuName}"
-    '';
+    services.udev.extraRules =
+      let
+        nvidiaGpuId = "0000:01:00.0";
+        nvidiaGpuName = "nvidia-gtx-1650-maxq";
+        intelGpuId = "0000:00:02.0";
+        intelGpuName = "intel-uhd-graphics-630";
+      in
+      ''
+        # Create /dev/dri/''${CARD} symlink
+        KERNEL=="card*", KERNELS=="${nvidiaGpuId}", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/${nvidiaGpuName}"
+        KERNEL=="card*", KERNELS=="${intelGpuId}", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/${intelGpuName}"
+      '';
 
     services.undervolt = {
       enable = true;

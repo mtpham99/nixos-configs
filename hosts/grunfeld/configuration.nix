@@ -28,28 +28,31 @@
       in
       {
         package = pkgs.nix;
-        settings.trusted-users = [ "root" "@wheel" ];
+        settings.trusted-users = [
+          "root"
+          "@wheel"
+        ];
         settings.experimental-features = "nix-command flakes";
 
         settings.substituters = [
-	  "https://cache.nixos.org"
+          "https://cache.nixos.org"
           "https://nix-community.cachix.org"
-	];
-	settings.trusted-public-keys = [
-	  "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        ];
+        settings.trusted-public-keys = [
+          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-	];
+        ];
 
         channel.enable = false;
-	settings.accept-flake-config = true;
-	settings.flake-registry = "";
+        settings.accept-flake-config = true;
+        settings.flake-registry = "";
         registry = lib.mapAttrs (_name: input: { flake = input; }) flakeInputs;
 
         nixPath = lib.mapAttrsToList (name: _input: "${name}=flake:${name}") flakeInputs;
         settings.nix-path = config.nix.nixPath;
         settings.use-xdg-base-directories = true;
 
-	settings.auto-optimise-store = true;
+        settings.auto-optimise-store = true;
         gc = {
           automatic = true;
           dates = "monthly";
@@ -107,7 +110,7 @@
       systemPackages = [
         pkgs.htop
         pkgs.nvtopPackages.full
-	pkgs.duf
+        pkgs.duf
         pkgs.lsof
 
         pkgs.pciutils
@@ -122,16 +125,16 @@
         pkgs.neovim
 
         pkgs.nixfmt-rfc-style
-	pkgs.nix-output-monitor
+        pkgs.nix-output-monitor
       ];
 
       shellAliases = {
         ls = "ls --color=auto";
-	grep = "grep --color=auto";
-	diff = "diff --color=auto";
-	watch = "watch --color";
-	mkdir = "mkdir -pv";
-	mount = "mount | column -t";
+        grep = "grep --color=auto";
+        diff = "diff --color=auto";
+        watch = "watch --color";
+        mkdir = "mkdir -pv";
+        mount = "mount | column -t";
       };
     };
 

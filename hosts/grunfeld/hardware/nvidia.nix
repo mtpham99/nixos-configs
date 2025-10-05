@@ -5,14 +5,18 @@
   ...
 }:
 let
-  allowedNvidiaPkgsPred = pkg: builtins.elem (lib.getName pkg) [
-    "nvidia-x11"
-    "nvidia-settings"
-  ];
-  allowCudaEulaLicensePred = pkg: builtins.elem (pkg.meta.license.shortName) [
-    "CUDA EULA"
-    "cuDNN EULA"
-  ];
+  allowedNvidiaPkgsPred =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "nvidia-x11"
+      "nvidia-settings"
+    ];
+  allowCudaEulaLicensePred =
+    pkg:
+    builtins.elem (pkg.meta.license.shortName) [
+      "CUDA EULA"
+      "cuDNN EULA"
+    ];
 in
 {
   nix.settings = {
@@ -22,7 +26,8 @@ in
     ];
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg: (allowedNvidiaPkgsPred pkg) || (allowCudaEulaLicensePred pkg);
+  nixpkgs.config.allowUnfreePredicate =
+    pkg: (allowedNvidiaPkgsPred pkg) || (allowCudaEulaLicensePred pkg);
 
   environment.systemPackages = [ pkgs.nvtopPackages.full ];
 

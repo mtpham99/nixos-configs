@@ -34,7 +34,7 @@
     xdg = {
       enable = true;
       userDirs = {
-	enable = true;
+        enable = true;
         createDirectories = true;
 
         desktop = config.home.homeDirectory + "/desktop";

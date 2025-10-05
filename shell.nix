@@ -1,5 +1,5 @@
 {
-  pkgs,
+  pkgs ? import <nixpkgs> { },
   ...
 }:
 
@@ -9,6 +9,7 @@ pkgs.mkShell {
     pkgs.disko
     pkgs.nixos-anywhere
 
+    pkgs.treefmt
     pkgs.nixfmt-rfc-style
     pkgs.nix-output-monitor
 
