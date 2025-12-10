@@ -79,7 +79,7 @@ in
           "SUPER_ALT_CTRL, DELETE, exec, hyprctl dispatch exit"
 
           # lock
-          "SUPER, ESC, exec, pidof hyprlock || hyprlock -q"
+          "SUPER, ESCAPE, exec, pidof hyprlock || hyprlock -q"
 
           # terminal
           "SUPER, T, exec, xdg-terminal-exec"
