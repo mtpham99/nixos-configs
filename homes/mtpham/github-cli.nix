@@ -17,16 +17,18 @@ in
     programs.git = {
       enable = true;
 
-      userName = "Matthew T. Pham";
-      userEmail = "pham.matthew+git@protonmail.com";
+      settings.user = {
+        name = "Matthew T. Pham";
+        email = "pham.matthew+git@protonmail.com";
+
+        init.defaultBranch = "main";
+      };
 
       signing = {
         signByDefault = true;
         key = "7E217574BF8B385B";
         format = "openpgp";
       };
-
-      extraConfig.init.defaultBranch = "main";
     };
 
     programs.gh = {

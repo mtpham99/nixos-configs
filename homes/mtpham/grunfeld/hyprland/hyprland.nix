@@ -42,7 +42,7 @@ in
     '';
     wayland.windowManager.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
 
       settings = {
         monitor = ", preferred, auto, 2.0";

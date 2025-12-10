@@ -11,12 +11,17 @@ let
       "nvidia-x11"
       "nvidia-settings"
     ];
-  allowCudaEulaLicensePred =
+  allowCudaEulaLicensesPred =
+    let
+      cudaLicenseNames = [
+        "CUDA EULA"
+        "cuDNN EULA"
+      ];
+    in
     pkg:
-    builtins.elem (pkg.meta.license.shortName) [
-      "CUDA EULA"
-      "cuDNN EULA"
-    ];
+    lib.all (license: license.free || lib.elem (license.shortName) cudaLicenseNames) (
+      lib.toList pkg.meta.license
+    );
 in
 {
   nix.settings = {
@@ -27,7 +32,7 @@ in
   };
 
   nixpkgs.config.allowUnfreePredicate =
-    pkg: (allowedNvidiaPkgsPred pkg) || (allowCudaEulaLicensePred pkg);
+    pkg: (allowedNvidiaPkgsPred pkg) || (allowCudaEulaLicensesPred pkg);
 
   environment.systemPackages = [ pkgs.nvtopPackages.full ];
 
@@ -39,8 +44,11 @@ in
     };
 
     nvidia = {
+      # NOTE: build error w/ open nvidia kernel module and linuxKernel.packages.linux_6_18.nvidia_x11
       open = true;
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # see https://github.com/NixOS/nixpkgs/issues/467814
+      # package = config.boot.kernelPackages.nvidiaPackages.latest;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
 
       powerManagement = {
         enable = true;
